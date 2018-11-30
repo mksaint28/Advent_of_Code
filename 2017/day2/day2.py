@@ -1,3 +1,7 @@
+# mksaint28
+# 11/30/2018
+# AoC Day 2
+
 def readArray():
 
     with open("INPUT.txt", "r") as fileHandler:
@@ -27,15 +31,17 @@ def checkSum(array):
 def evenDivide(array):
     div = []
     for subarr in array:
-        maxLocal = max(subarr)
         for x in subarr:
-            if maxLocal != x and maxLocal%x == 0:
-                div.append(maxLocal/x)
+            for j in range(len(subarr)):
+                if x!=subarr[j] and x%subarr[j] == 0:
+                    div.append(x//subarr[j])
+
     return sum(div)
-# myArray = readArray()
 
-myArray = [[5, 9, 2, 8], [9, 4, 7, 3], [3, 8, 6, 5]]
+myArray = readArray()
 
-print(evenDivide(myArray))
+part1 = checkSum(myArray)
+part2 = evenDivide(myArray)
 
-# print(checkSum(myArray))
+print("The answer to part 1 is {}".format(part1))
+print("The answer to part 2 is {}".format(part2))

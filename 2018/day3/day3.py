@@ -1,3 +1,5 @@
+import turtle as t
+
 class claim:
 
     def __init__(self, name = "EMPTY", lX = 0, lY = 0, width = 0, height = 0):
@@ -29,8 +31,8 @@ class claim:
     def getRX(self):
         return self.getLX() + self.getWidth()
     
-    def getRY(self):
-        return self.getLY() + self.getHeight()
+    def getHY(self):
+        return self.getLY() + (self.getHeight())
 
     def getWidth(self):
         return self.width
@@ -69,15 +71,30 @@ class claim:
         return self
 
 
-    def compareOverlap(self, other):
-        if (self.getLX() > other.getRX()) or (other.getLX() > self.getRX()):
-            return False
+    def overlaps(self, other):
+        if (self.getLX() < other.getRX()) and (self.getRX() > other.getLX()) and (self.getHY() > other.getLY()) and (self.getLY() < other.getHY()):
+            return True
         
-        if (self.getLY() < other.getRY()) or (other.getLY() < self.getRY()):
-            return False
+        return False
 
-        return True
-        
+    def drawClaim(self):
+
+        t.penup()
+        t.goto(self.getLX()*10, self.getLY()*10)
+        t.pd()
+        t.goto(self.getRX()*10, self.getLY()*10)
+        t.goto(self.getRX()*10, self.getHY()*10)
+        t.goto(self.getLX()*10, self.getHY()*10)
+        t.goto(self.getLX()*10, self.getLY()*10)
+        t.pu()
+
+
+# def overlapArea(claim1, claim2):
+
+#     if claim1.getLX < claim2.getRX():
+#         newX = claim1.get
+
+
 
 myStringList = ["#1 @ 1,3: 4x4", "#2 @ 3,1: 4x4", "#3 @ 5,5: 2x2"]
    
@@ -89,14 +106,17 @@ for x in myStringList:
 
 for x in myClaimsList:
     print(x.description())
+    x.drawClaim()
 
-if (myClaimsList[0].compareOverlap(myClaimsList[1])):
+if (myClaimsList[0].overlaps(myClaimsList[1])):
     print("{} overlaps with {}".format(myClaimsList[0].getName(), myClaimsList[1].getName()))
 
-if (myClaimsList[0].compareOverlap(myClaimsList[2])):
+if (myClaimsList[0].overlaps(myClaimsList[2])):
     print("{} overlaps with {}".format(myClaimsList[0].getName(), myClaimsList[2].getName()))
 
-if (myClaimsList[1].compareOverlap(myClaimsList[2])):
+if (myClaimsList[1].overlaps(myClaimsList[2])):
     print("{} overlaps with {}".format(myClaimsList[1].getName(), myClaimsList[2].getName()))
 
+
+t.done()
 # claim1 = claim(128, 3, 4, 2, 3)
